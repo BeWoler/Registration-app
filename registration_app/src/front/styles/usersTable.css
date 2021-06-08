@@ -1,0 +1,15 @@
+.table__box {
+  background-color: lightgrey;
+}
+
+.table__users {
+  width: 100%;
+}
+
+.table__item {
+  min-height: 50px;
+}
+
+.table__item:nth-child(even) {
+  background-color: #fff;
+}
