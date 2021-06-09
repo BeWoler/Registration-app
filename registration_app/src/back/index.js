@@ -27,11 +27,10 @@ app.post("/register", (req, res) => {
 
   const email = req.body.email;
   const password = req.body.password;
-  const fName = req.body.fName;
-  const regDate = req.body.regDate;
+  const fName = req.body.name;
 
-  db.query("INSERT INTO users (ID, email, password, name, date) VALUES (?,?)", [email, password, fName, regDate], (err, result) => {
-    console.log(err); //ToDo autoincrement ID
+  db.query("INSERT INTO users (email, password, name) VALUES (?,?,?)", [email, password, fName], (err, result) => {
+    console.log(err);
   })
 })
 
