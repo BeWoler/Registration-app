@@ -8,16 +8,12 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [fName, setFName] = useState(" ");
 
-  let date = new Date();
-  let regDate = date.getDate();
-
   const register = (e) => {
     e.preventDefault();
     Axios.post("http://localhost:3001/register", {
       email: email,
       password: password,
       name: fName,
-      date: regDate
     }).then((response) => {
       console.log(response);
     });
