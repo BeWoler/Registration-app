@@ -7,7 +7,7 @@ export default function UsersTable() {
 
   return (
     <div className="table__box">
-      {/* <Toolbar /> */}
+      <Toolbar />
       <div className="table">
         <table className="table__users">
           <tbody>

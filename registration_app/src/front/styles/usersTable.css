@@ -1,5 +1,10 @@
+.table {
+  margin: 0;
+}
+
 .table__box {
   background-color: lightgrey;
+  border: 1px solid #000;
 }
 
 .table__users {
