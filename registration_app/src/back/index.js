@@ -29,8 +29,30 @@ app.post("/register", (req, res) => {
   const password = req.body.password;
   const fName = req.body.name;
 
-  db.query("INSERT INTO users (email, password, name) VALUES (?,?,?)", [email, password, fName], (err, result) => {
-    console.log(err);
+  db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
+      if(result.length <= 0) {
+        db.query("INSERT INTO users (email, password, name) VALUES (?,?,?)", [email, password, fName], (err, result) => {
+        })
+        res.send({message: "Registration was successful"});
+      }
+      else {
+        res.send({message: "Email already exist"});
+      }
+  })
+})
+
+app.post("/login", (req, res) => {
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  db.query("SELECT * FROM users WHERE email = ? AND password = ?", [email, password], (err, result) => {
+      if(result.length > 0) {
+        res.send(result);
+      }
+      else {
+        res.send({message: "Wrong email or password"});
+      }
   })
 })
 
