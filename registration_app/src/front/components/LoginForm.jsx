@@ -8,6 +8,8 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [fName, setFName] = useState(" ");
 
+  const [loginStatus, setLoginStatus] = useState("");
+
   const register = (e) => {
     e.preventDefault();
     Axios.post("http://localhost:3001/register", {
@@ -15,12 +17,28 @@ export default function LoginForm() {
       password: password,
       name: fName,
     }).then((response) => {
-      console.log(response);
+      if(response.data.message) {
+        setLoginStatus(response.data.message);
+        setTimeout( () => setLoginStatus(""), 3000);
+      }
     });
   };
 
+  const login = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:3001/login", {
+      email: email,
+      password: password,
+    }).then((response) => {
+      if(response.data.message) {
+        setLoginStatus(response.data.message);
+      }
+    });
+  }
+
   return (
     <Form>
+      <div className="errorLogin">{loginStatus}</div>
       <Form.Group>
         <label htmlFor="exampleInputEmail1">Email address</label>
         <Form.Input
@@ -61,7 +79,7 @@ export default function LoginForm() {
           id="btnSignIn"
           primary
           type="submit"
-          onClick={(e) => e.preventDefault()}
+          onClick={login}
         >
           Sign in
         </Button>
