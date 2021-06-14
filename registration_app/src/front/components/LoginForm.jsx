@@ -1,14 +1,18 @@
 import { React, useState } from "react";
 import { Form, Button } from "bootstrap-4-react";
+import { useHistory } from 'react-router-dom';
 import Axios from "axios";
 import "../styles/loginForm.css";
 
 export default function LoginForm() {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fName, setFName] = useState(" ");
 
   const [loginStatus, setLoginStatus] = useState("");
+
+  Axios.defaults.withCredentials = true;
 
   const register = (e) => {
     e.preventDefault();
@@ -30,11 +34,24 @@ export default function LoginForm() {
       email: email,
       password: password,
     }).then((response) => {
-      if(response.data.message) {
-        setLoginStatus(response.data.message);
+      if(!response.data.auth) {
+        setLoginStatus(false);
+      }
+      else {
+        localStorage.setItem("token", response.data.token);
+        setLoginStatus(true);
+        history.go(0)
       }
     });
   }
+
+  // useEffect(() => {
+  //   Axios.get("http://localhost:3001/login").then((response) => {
+  //     if(response.data.loggedIn === true) {
+  //       setLoginStatus(response.data.user[0].email)
+  //     }
+  //   })
+  // }, [])
 
   return (
     <Form>
